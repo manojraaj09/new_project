@@ -64,7 +64,7 @@ class ForgetPage extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Color(0xFF344543),
                       borderRadius: BorderRadius.circular(20)),
-                  child: TextButton(
+                  child: FlatButton(
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (_) => const ResetPage()));

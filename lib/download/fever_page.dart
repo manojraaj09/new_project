@@ -13,7 +13,17 @@ class FeverPage extends StatelessWidget {
           'Find Your Health Concern',
           style: TextStyle(color: Colors.white, fontSize: 16),
         ),
-
+        elevation: 0,
+        centerTitle: true,
+        leading: GestureDetector(
+          onTap: (){ Navigator.push(context,
+              MaterialPageRoute(builder: (_) => const DoctorList()));},
+          child: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+            size: 30,
+          ),
+        ),
         backgroundColor: Color(0xFF689df7),
 
       ),

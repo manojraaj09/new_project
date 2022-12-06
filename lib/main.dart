@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'booking/ftptest.dart';
-import 'login/navigation_page.dart';
 import 'sample/splash_page.dart';
 
 void main() {
@@ -17,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
       ),
-    home: const NavigationPage(),
+    home: const Splash(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -25,7 +25,7 @@ class _DoctorHomeVisitState extends State<DoctorHomeVisit> {
     '5',
   ];
   List<TextEditingController> controller = [];
-  List alldata=[];
+  List<dynamic> alldata=[];
 
   List search=[];
   Serves serves=Serves();
@@ -35,15 +35,14 @@ class _DoctorHomeVisitState extends State<DoctorHomeVisit> {
     search=[];
     for(int i=0;i<alldata.length;i++) {
       var arr = {
-        "sid": alldata[i]['id'].toString(),
-        "day": myCategoryDynamic[i].toString(),
+        "sid": alldata[i]['id'],
+        "day": controller[i].text,
       };
-
 
       search.add(arr);
     }
 
-   // print(search);
+    print(search);
 
 
     Navigator.push(context,
@@ -72,7 +71,6 @@ print(alldata);
 
   List amar=[];
 
-  final Map myCategoryDynamic = {};
 
   @override
   Widget build(BuildContext context) {
@@ -106,50 +104,20 @@ print(alldata);
                     itemCount: alldata.length,
                     itemBuilder: (BuildContext context, int index) {
                       controller.add(new TextEditingController());
-                      return Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            radius: 20,
-                            backgroundImage: NetworkImage(alldata[index]['image']),
-                          ),
+                      return ListTile(
+                        leading: CircleAvatar(
+                          radius: 20,
+                          backgroundImage: NetworkImage(alldata[index]['image']),
+                        ),
 
 title: Text(alldata[index]['servicename']),
-                          trailing: SizedBox(
-                            width: 100,
-                              child:DropdownButtonFormField(
-                                hint: Text('Day'),
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder( //<-- SEE HERE
-                                    borderSide: BorderSide(color: Colors.black, width: 1),
-                                  ),
-                                  focusedBorder: OutlineInputBorder( //<-- SEE HERE
-                                    borderSide: BorderSide(color: Colors.black, width: 1),
-                                  ),
+                        trailing: SizedBox(
+                          width: 60,
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              controller: controller[index],
+                            )),
 
-                                  fillColor: Colors.white,
-                                ),
-                                dropdownColor: Colors.white,
-                                value: myCategoryDynamic[index],
-                                onChanged: ( newValue) {
-                                  setState(() {
-                                    myCategoryDynamic[index] = newValue!;
-                                    print(myCategoryDynamic[index]);
-                                  });
-                                },
-                                items: <String>['1', '2', '3', '4','5','6','7','8','9','10'].map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(
-                                      value,
-                                      style: TextStyle(fontSize: 15),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                          ),
-
-                        ),
                       );
                     }),
 
@@ -163,7 +131,7 @@ title: Text(alldata[index]['servicename']),
               decoration: BoxDecoration(
                   color: const Color(0xFF689df7),
                   borderRadius: BorderRadius.circular(20)),
-              child: TextButton(
+              child: FlatButton(
                 onPressed: () {
                   getval();
                 },

@@ -8,9 +8,10 @@ import 'package:http/http.dart' as http;
 import '../login/home_page.dart';
 import '../login/navigation_page.dart';
 import '../servise.dart';
+//
 
 class SignPage extends StatefulWidget {
-   SignPage({Key? key, required this.mobile}) : super(key: key);
+   const SignPage({Key? key, required this.mobile}) : super(key: key);
 final mobile;
   @override
   State<SignPage> createState() => _SignPageState();
@@ -31,7 +32,7 @@ class _SignPageState extends State<SignPage> {
     SharedPreferences prefs =await SharedPreferences.getInstance();
     //print('8382946376');
 
-      var url2 = Uri.parse(serves.url + "register.php");
+      var url2 = Uri.parse("${serves.url}register.php");
 
       var response = await http.post(url2, body: {
         'name': name.text,
@@ -54,7 +55,7 @@ class _SignPageState extends State<SignPage> {
 
 
           Navigator.push(
-            context,MaterialPageRoute(builder: (context)=> NavigationPage()),
+            context,MaterialPageRoute(builder: (context)=> const NavigationPage()),
           );
 
 
@@ -146,7 +147,7 @@ class _SignPageState extends State<SignPage> {
                                 const BorderSide(width: 1, color: Color(0xFF4385f5)),
                             borderRadius: BorderRadius.circular(20)),
                         hintText: ('Name'),
-                        hintStyle: TextStyle(fontSize: 13)),
+                        hintStyle: const TextStyle(fontSize: 13)),
                   ),
               )),
 
@@ -180,7 +181,7 @@ class _SignPageState extends State<SignPage> {
                                 const BorderSide(width: 1, color: Color(0xFF4385f5)),
                             borderRadius: BorderRadius.circular(20)),
                         hintText: ('Gender'),
-                        hintStyle: TextStyle(fontSize: 13)),
+                        hintStyle: const TextStyle(fontSize: 13)),
                   ),
               )),
           Container(
@@ -240,7 +241,7 @@ class _SignPageState extends State<SignPage> {
                               const BorderSide(width: 1,color: Color(0xFF4385f5)),
                           borderRadius: BorderRadius.circular(20)),
                       hintText: 'DOB',
-                      hintStyle: TextStyle(fontSize: 13),
+                      hintStyle: const TextStyle(fontSize: 13),
                       prefixIcon: const Icon(Icons.calendar_today),
                     ),
                     readOnly: true,
@@ -273,9 +274,9 @@ class _SignPageState extends State<SignPage> {
             height: 40,
             width: 200,
             decoration: BoxDecoration(
-                  color: Color(0xFF689df7),
+                  color: const Color(0xFF689df7),
                   borderRadius: BorderRadius.circular(20)),
-            child: TextButton(
+            child: FlatButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   // If the form is valid, display a snackbar. In the real world,

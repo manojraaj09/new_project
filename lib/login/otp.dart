@@ -75,7 +75,7 @@ print('verify');
 
         prefs.setString('regid', data['regid']);
         prefs.setString('name', data['user']);
-        prefs.setString('mobile', widget.mobile1.toString());
+
 
           Navigator.push(
             context,MaterialPageRoute(builder: (context)=> NavigationPage()),
@@ -225,7 +225,7 @@ print('verify');
               decoration: BoxDecoration(
                   color: Color(0xFF344543),
                   borderRadius: BorderRadius.circular(20)),
-              child: TextButton(
+              child: FlatButton(
                 onPressed: () {
                   checkOtp(codes.text);
 

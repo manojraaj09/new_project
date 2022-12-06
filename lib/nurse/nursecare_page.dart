@@ -1,8 +1,5 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import '../servise.dart';
-
+import '../Nurse/nurse_page.dart';
 import 'nurseprocedure.dart';
 
 class NurseCare extends StatefulWidget {
@@ -17,202 +14,176 @@ class _NurseCareState extends State<NurseCare> {
   bool valuesecond = false;
   bool valuethird = false;
 
-  initState() {
-    getmedia();
-    super.initState();
-  }
-
-  List carddata=[];
-
-  bool iscart=true;
-
-  Serves serves=Serves();
-  List<bool> isshow=[];
-  getmedia() async{
-
-    final uri = Uri.parse(serves.url+"hometest.php?type=nursing");
-
-
-    var response = await http.get(uri);
-    var state= json.decode(response.body);
-    // print(state);
-    carddata=[];
-    int count=0;
-    state.forEach((row) async{
-
-      var amar={
-        "servicename":row['servicename'],
-        "image": row['image'],
-        'id':row['id'],
-        'count':    count,
-      };
-      isshow.add(false);
-      carddata.add(amar);
-      count++;
-    });
-    setState((){
-      iscart=false;
-    });
-  }
-
-
-  List  allcheckid=[];
-  List  name=[];
-  List  pic=[];
-
-
-
   @override
   Widget build(BuildContext context) {
-    var m=-1;
-    return iscart ? Center(child: CircularProgressIndicator()) : Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: const Text(
-            'Home Visit',
+            'Nursing Staff',
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           elevation: 0,
-
-
+          automaticallyImplyLeading: false,
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => const Nurse()));
+            },
+            child: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+              size: 30,
+            ),
+          ),
           backgroundColor: const Color(0xFF689df7),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: const Text(
-                    'Choose Procedure',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  ),
+            child: Column(children: [
+              Container(
+                padding: const EdgeInsets.only(top: 20),
+                child: const Text(
+                  'CHOOSE PROCEDURE',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Column(
-                  children: carddata.map((emt) {
-                    m++;
-                    // ischeck[m]=ischeck[m];
-
-
-                    return  Container(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Checkbox(
-                            checkColor: Colors.blue,
-                            activeColor: Colors.black,
-                            value: isshow[emt['count']],
-                            onChanged: (bool? value) {
-                              setState(() {
-
-                                if(isshow[emt['count']]==true){
-                                  isshow[emt['count']]=false;
-
-
-                                  name.remove(emt['servicename']);
-                                  pic.remove(emt['image']);
-                                  allcheckid.remove(emt['id']);
-                                }else{
-                                  isshow[emt['count']]=true;
-
-
-
-                                  name.add(emt['servicename']);
-                                  pic.add("${serves.url}/image/${emt['image']}");
-                                  allcheckid.add(emt['id']);
-                                }
-
-                                // print(allcheckid);
-                                //    print(pic);
-                                //    print(name);
-
-                              });
-                            },
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (ctx) => AlertDialog(
-                                    title: Image.network("${serves.url}/image/${emt['image']}"),
-                                  ));
-                            },
-                            child:  CircleAvatar(
-                              radius: 20,
-                              backgroundImage: NetworkImage("${serves.url}/image/${emt['image']}"),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 30,
-                          ),
-                          Text(
-                            emt['servicename'].toString(),
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Container(
-                    height: 40,
-                    width: 200,
-                    decoration: BoxDecoration(
-                        color: const Color(0xFF689df7),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: TextButton(
-                      onPressed: () {
-                        getlist();
+              ),
+              Container(
+                padding: const EdgeInsets.only(top: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Checkbox(
+                      checkColor: Colors.blue,
+                      activeColor: Colors.black,
+                      value: this.valuefirst,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          this.valuefirst = value!;
+                        });
                       },
-                      child: const Text(
-                        'Continue',
-                        style: TextStyle(fontSize: 14, color: Colors.white),
+                    ),
+                    const SizedBox(width:20,),
+                    InkWell(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              title: Image.asset('assets/images/iv.jpg'),
+                            ));
+                      },
+                      child: const CircleAvatar(
+                        radius: 20,
+                        backgroundImage: AssetImage('assets/images/iv.jpg'),
                       ),
                     ),
+                    const SizedBox(width: 30,),
+                    const Text(
+                      'Home Care',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(top: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Checkbox(
+                      checkColor: Colors.blue,
+                      activeColor: Colors.black,
+                      value: this.valuesecond,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          this.valuesecond = value!;
+                        });
+                      },
+                    ),
+                    const SizedBox(width: 20,),
+                    InkWell(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              title: Image.asset('assets/images/iv.jpg'),
+                            ));
+                      },
+                      child: const CircleAvatar(
+                        radius: 20,
+                        backgroundImage: AssetImage('assets/images/iv.jpg'),
+                      ),
+                    ),
+                    const SizedBox(width: 30,),
+                    const Text(
+                      'STITCHING',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(top: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Checkbox(
+                      checkColor: Colors.blue,
+                      activeColor: Colors.black,
+                      value: this.valuethird,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          this.valuethird = value!;
+                        });
+                      },
+                    ),
+                    const SizedBox(width: 20,),
+                    InkWell(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              title: Image.asset('assets/images/iv.jpg'),
+                            ));
+                      },
+                      child: const CircleAvatar(
+                        radius: 20,
+                        backgroundImage: AssetImage('assets/images/iv.jpg'),
+                      ),
+                    ),
+                    const SizedBox(width: 30,),
+                    const Text(
+                      'IV DRIP',
+                      style: TextStyle(color: Colors.black),
+                    ),
+
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              Container(
+                height: 40,
+                width: 200,
+                decoration: BoxDecoration(
+                    color: const Color(0xFF689df7),
+                    borderRadius: BorderRadius.circular(20)),
+                child: FlatButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => const NurseProcedure()));
+                  },
+                  child: const Text(
+                    'Continue',
+                    style: TextStyle(fontSize: 14, color: Colors.white),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ]),
           ),
         ));
   }
-  List alldata=[];
-  void getlist() {
-    for(int i=0;i<allcheckid.length;i++){
-
-      var arr= {
-        "servicename": name[i].toString(),
-        "image": pic[i],
-        'id': allcheckid[i],
-        'count': "Select",
-      };
-      alldata.add(arr);
-    }
-
-    //print(alldata);
-
-
-
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (_) =>  NurseProcedure(name: alldata,)));
-  }
-
 }
-
-
-
-

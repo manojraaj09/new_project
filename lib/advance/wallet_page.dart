@@ -1,100 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
-
-import '../servise.dart';
-class Booking extends StatefulWidget {
-  const Booking({Key? key,required this.type}) : super(key: key);
-final type;
-  @override
-  State<Booking> createState() => _BookingState();
-}
-
-class _BookingState extends State<Booking> {
-
-  List pandind=[];
-  List complete=[];
-  List cancel=[];
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getdata();
-  }
-  Serves serves=Serves();
-String? name;
-  getdata() async{
- //   print('getdata');
-    SharedPreferences prefs =await SharedPreferences.getInstance();
-var cid=prefs.getString('regid').toString();
-name =prefs.getString('name').toString();
-    var url2 = Uri.parse(serves.url+"mybook.php?type=${widget.type}&reg_id=$cid");
-  print(url2);
-    var response = await http.get(url2);
-    var state=jsonDecode(response.body);
-
-    setState(() {
-
-      state.forEach((row){
-        // var arr={
-        //   "serviceday":row['bookingInfo']['serviceday'],
-        //   "servicename":row['bookingInfo']['servicename'],
-        //   "serviceprice":row['bookingInfo']['serviceprice'],
-        //   "description":row['bookingInfo']['description'],
-        //   "image":row['bookingInfo']['image'],
-        //   "type":row['bookingInfo']['type'],
-        //
-        // };
-
-        var arr ={
-          "servicename":row['servicename'],
-          "orderNo":row['orderNo'],
-          "status":row['status'],
-          "bookingDate":row['bookingDate'],
-
-          "destination":row['destination'],
-          "serviceProviderName":row['serviceProviderName'],
-          "serviceProviderMobileNo":row['serviceProviderMobileNo'],
-          "state":row['state'],
-
-          "district":row['district'],
-          "consultationFee":row['consultationFee'],
-          "degree":row['degree'],
-          "photo":row['photo'],
-          "TotalAmount":row['TotalAmount'],
-          "type":row['type'],
-          "bookingInfo":row['bookingInfo'],
-        };
 
 
-
-        if(row['status']=='Pending'){
-          pandind.add(arr);
-        }else if(row['status']=='Completed'){
-          complete.add(arr);
-
-        }else if(row['status']=='Cancel'){
-          cancel.add(arr);
-
-        }
-
-
-      });
-      print(pandind);
-setState(() {
-  bool isshow=true;
-});
-
-    });
-
-  }
-  bool isshow=true;
-
-
-
+class Booking extends StatelessWidget {
+  const Booking({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +11,9 @@ setState(() {
       child: Scaffold(
           appBar: AppBar(
             backgroundColor: const Color(0xFF4385f5),
-
+            automaticallyImplyLeading: false,
+            centerTitle: true,
+            elevation: 0,
             title: const Text(
               'Booking',
               style: TextStyle(
@@ -126,86 +36,101 @@ setState(() {
             ),
           ),
           body: TabBarView(children: [
+            GestureDetector(
+              onTap: () {
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (_) => const BookProfile()));
+              },
+              child: ListView.builder(
+                  itemCount: 5,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+
+                      child: Card(
+                        elevation: 1,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        child: const ListTile(
+                          leading: CircleAvatar(
+                              radius: 20,
+                              backgroundImage:
+                                  AssetImage('assets/images/boy.jpg')),
+                          title: Text(
+                            'Service Booked By-Aman Singh\nService Given By- AAA\nService-XYZ\nProcedure-ABCD',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                              'Moti Nagar,8565874510,\nOnline Payment\nTotal payment-500Rs',style: TextStyle(color: Colors.black),),
+                        ),
+                      ),
+                    );
+                  }),
+            ),
             ListView.builder(
-                itemCount: pandind.length,
+                itemCount: 2,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
 
                     child: Card(
-                      elevation: 1,
+                      elevation: 5,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
                       ),
-                      child:  ListTile(
+                      child: const ListTile(
                         leading: CircleAvatar(
                             radius: 20,
-                            backgroundImage:
-                                NetworkImage("${serves.url}image/${pandind[index]['photo']}")),
+                            backgroundImage: AssetImage('assets/images/boy.jpg')),
                         title: Text(
-                          'Service Booked $name\nService Given By- ${pandind[index]['serviceProviderName']}\nService-name-\n ${pandind[index]['bookingInfo']}',
+                          'Service Booked By-Aman Singh\nService Given By- AAA\nService-XYZ\nProcedure-ABCD',
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 14,
                               fontWeight: FontWeight.bold),
                         ),
-                        subtitle: Text(
-                            '${pandind[index]['district']},${pandind[index]['serviceProviderMobileNo']},\nOnline Payment\nTotal payment-${pandind[index]['TotalAmount']}',style: TextStyle(color: Colors.black),),
+                        subtitle: Text('Moti Nagar,8565874510,\nOnline Payment\nTotal payment-500Rs\nService Given By- AAA',style: TextStyle(color: Colors.black),),
+                        trailing: Text(
+                          'Completed',
+                          style: TextStyle(
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14),
+                        ),
                       ),
                     ),
                   );
                 }),
             ListView.builder(
-                itemCount: complete.length,
+                itemCount: 4,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
-
                     child: Card(
-                      elevation: 1,
+                      elevation: 5,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
                       ),
-                      child:  ListTile(
+                      child: const ListTile(
                         leading: CircleAvatar(
                             radius: 20,
-                            backgroundImage:
-                            NetworkImage("${serves.url}image/${complete[index]['photo']}")),
+                            backgroundImage: AssetImage('assets/images/boy.jpg')),
                         title: Text(
-                          'Service Booked $name\nService Given By- ${complete[index]['serviceProviderName']}\nService-name-\n ${complete[index]['bookingInfo']}',
+                          'Service Booked By-Aman Singh\nService Given By- AAA\nService-XYZ\nProcedure-ABCD',
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 14,
                               fontWeight: FontWeight.bold),
                         ),
-                        subtitle: Text(
-                          '${complete[index]['district']},${complete[index]['serviceProviderMobileNo']},\nOnline Payment\nTotal payment-${complete[index]['TotalAmount']}',style: TextStyle(color: Colors.black),),
-                      ),
-                    ),
-                  );
-                }),
-            ListView.builder(
-                itemCount: cancel.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-
-                    child: Card(
-                      elevation: 1,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      child:  ListTile(
-                        leading: CircleAvatar(
-                            radius: 20,
-                            backgroundImage:
-                            NetworkImage("${serves.url}image/${cancel[index]['photo']}")),
-                        title: Text(
-                          'Service Booked $name\nService Given By- ${cancel[index]['serviceProviderName']}\nService-name-\n ${cancel[index]['bookingInfo']}',
+                        subtitle: Text('Moti Nagar,8565874510,\nOnline Payment\nTotal payment-500Rs\nService Given By- AAA',style: TextStyle(color: Colors.black),),
+                        trailing: Text(
+                          'Canceled',
                           style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold),
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14),
                         ),
-                        subtitle: Text(
-                          '${cancel[index]['district']},${cancel[index]['serviceProviderMobileNo']},\nOnline Payment\nTotal payment-${cancel[index]['TotalAmount']}',style: TextStyle(color: Colors.black),),
                       ),
                     ),
                   );

@@ -1,16 +1,12 @@
 import 'dart:convert';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter/material.dart';
+
 import 'package:http/http.dart' as http;
+
 import '../nurse/confirm_page.dart';
 import '../sample/review_page.dart';
 import '../servise.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../successful.dart';
-
-
-
 class PhysicianPage extends StatefulWidget {
   const PhysicianPage({Key? key, required this.drid}) : super(key: key);
   final drid;
@@ -35,11 +31,15 @@ class _PhysicianPageState extends State<PhysicianPage> {
   List<dynamic> allans=[];
   getanswer() async{
 
-    final uri = Uri.parse(serves.url+"showdoctor.php?showdata=${search.text}&drid=${widget.drid}");
-    print(uri);
-    var response = await http.get(uri);
+    final uri = Uri.parse(serves.url+"showdoctor.php");
+    var response = await http.post(uri,body: {
+      'showdata':search.text.toString(),
+      'drid':widget.drid,
+
+    });
 
     var state= json.decode(response.body);
+    print(state);
     allans=[];
     setState(() {
       isshow=false;
@@ -48,24 +48,7 @@ class _PhysicianPageState extends State<PhysicianPage> {
 
   }
 
-  void bookdata(drid) async{
-    SharedPreferences prefs =await SharedPreferences.getInstance();
 
-    var url2 = Uri.parse(serves.url+"book.php");
-
-    var response = await http.post(url2, body:{
-
-      "drid":drid.toString(),
-      "regid":prefs.getString("regid").toString(),
-      "type":"doctoronline",
-    },);
-    if(response.statusCode==200) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (_) => const Successfull()));
-    }
-  }
 
 
   @override
@@ -76,7 +59,8 @@ class _PhysicianPageState extends State<PhysicianPage> {
           'Find Your Health Concern',
           style: TextStyle(color: Colors.white, fontSize: 16),
         ),
-
+        elevation: 0,
+        centerTitle: true,
 
         backgroundColor: Colors.teal,
       ),
@@ -238,11 +222,10 @@ class _PhysicianPageState extends State<PhysicianPage> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        bookdata(item['id']);
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (_) =>  CnfPage(did:item['id'],dname:item['name'],payment:item['Consultation'].toString(),type:item['bookingtype'])));
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (_) =>  CnfPage(did:item['id'],dname:item['name'],payment:item['Consultation'].toString(),type:item['bookingtype'])));
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.all(12),

@@ -77,7 +77,7 @@ class Setting extends StatelessWidget {
                         fontSize: 14,
                         fontWeight: FontWeight.bold),
                   )),
-              TextButton(
+              FlatButton(
                   onPressed: () {},
                   child: const Text(
                     'Log Out',

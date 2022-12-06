@@ -1,15 +1,12 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 import '../download/final_page.dart';
-import '../servise.dart';
 import 'ambulance_page.dart';
 
 
 class Basic extends StatefulWidget {
-  const Basic({Key? key, required this.type}) : super(key: key);
-final type;
+  const Basic({Key? key}) : super(key: key);
+
   @override
   State<Basic> createState() => _BasicState();
 }
@@ -21,55 +18,8 @@ class _BasicState extends State<Basic> {
   bool valuefourth = false;
   bool valuefifth = false;
 
-  initState() {
-    getmedia();
-    super.initState();
-  }
-
-  List carddata=[];
-
-  bool iscart=true;
-
-  Serves serves=Serves();
-  List<bool> isshow=[];
-  getmedia() async{
-
-    final uri = Uri.parse(serves.url+"hometest.php?type=${widget.type}");
-    var response = await http.get(uri);
-    var state= json.decode(response.body);
-    // print(state);
-    carddata=[];
-    int count=0;
-    state.forEach((row) async{
-
-      var amar={
-        "servicename":row['servicename'],
-        "image": row['image'],
-        'id':row['id'],
-        'count':    count,
-      };
-      isshow.add(false);
-      carddata.add(amar);
-      count++;
-    });
-    setState((){
-      iscart=false;
-    });
-  }
-
-
-  final destination= TextEditingController();
-  final distance= TextEditingController();
-
-  List  allcheckid=[];
-  List  name=[];
-  List  pic=[];
-
-
-
   @override
   Widget build(BuildContext context) {
-    var m=-1;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -91,7 +41,7 @@ class _BasicState extends State<Basic> {
         ),
         backgroundColor: const Color(0xFF689df7),
       ),
-      body:iscart?Center(child: CircularProgressIndicator()) : SafeArea(
+      body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -105,73 +55,76 @@ class _BasicState extends State<Basic> {
                       fontSize: 20),
                 ),
               ),
-              Column(
-                children: carddata.map((emt) {
-                  m++;
-                  // ischeck[m]=ischeck[m];
-
-
-                  return  Container(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Checkbox(
-                          checkColor: Colors.blue,
-                          activeColor: Colors.black,
-                          value: isshow[emt['count']],
-                          onChanged: (bool? value) {
-                            setState(() {
-
-                              if(isshow[emt['count']]==true){
-                                isshow[emt['count']]=false;
-
-
-                                name.remove(emt['servicename']);
-                                pic.remove(emt['image']);
-                                allcheckid.remove(emt['id']);
-                              }else{
-                                isshow[emt['count']]=true;
-                                name.add(emt['servicename']);
-                                pic.add("${serves.url}/image/${emt['image']}");
-                                allcheckid.add(emt['id']);
-                              }
-
-                            });
-                          },
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (ctx) => AlertDialog(
-                                  title: Image.network("${serves.url}/image/${emt['image']}"),
-                                ));
-                          },
-                          child:  CircleAvatar(
-                            radius: 20,
-                            backgroundImage: NetworkImage("${serves.url}/image/${emt['image']}"),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 30,
-                        ),
-                        Text(
-                          emt['servicename'].toString(),
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ],
+              Container(
+                padding: const EdgeInsets.only(left: 20, top: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'nursing Staff',
+                      style: TextStyle(color: Colors.black),
                     ),
-                  );
-                }).toList(),
+                    Checkbox(
+                      checkColor: Colors.blue,
+                      activeColor: Colors.black,
+                      value: this.valuesecond,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          this.valuesecond = value!;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'O2',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    Checkbox(
+                      checkColor: Colors.blue,
+                      activeColor: Colors.black,
+                      value: this.valuefirst,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          this.valuefirst = value!;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
               Container(
                 padding:const EdgeInsets.only(left: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Doctor',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    Checkbox(
+                      checkColor: Colors.blue,
+                      activeColor: Colors.black,
+                      value: this.valuethird,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          this.valuethird = value!;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding:const EdgeInsets.only(left: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const Text(
                       'Provide Destination',
@@ -182,7 +135,6 @@ class _BasicState extends State<Basic> {
                       height: 40,
                       width: 180,
                       child: TextField(
-                        controller: destination,
                         // keyboardType: TextInputType.number,
                         enabled: true,
                         decoration: InputDecoration(
@@ -220,9 +172,8 @@ class _BasicState extends State<Basic> {
                     SizedBox(width: 5,),
                     SizedBox(
                       height: 40,
-                      width: 180,
+                      width: 150,
                       child: TextField(
-                        controller: distance,
                         // keyboardType: TextInputType.number,
                         enabled: true,
                         decoration: InputDecoration(
@@ -254,11 +205,10 @@ class _BasicState extends State<Basic> {
                 decoration: BoxDecoration(
                     color: Color(0xFF689df7),
                     borderRadius: BorderRadius.circular(20)),
-                child: TextButton(
+                child: FlatButton(
                   onPressed: () {
-                    getlist();
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (_) => const Final()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => const Final()));
                   },
                   child: const Text(
                     'Continue',
@@ -271,29 +221,5 @@ class _BasicState extends State<Basic> {
         ),
       ),
     );
-  }
-
-
-  List alldata=[];
-  void getlist() {
-    for(int i=0;i<allcheckid.length;i++){
-
-      var arr= {
-        "distance": distance.text,
-        "destination": destination.text,
-        'id': allcheckid[i],
-
-      };
-      alldata.add(arr);
-    }
-
-    //print(alldata);
-
-
-
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (_) =>  Final(data: alldata,)));
   }
 }

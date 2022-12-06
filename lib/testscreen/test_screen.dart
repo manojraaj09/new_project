@@ -100,7 +100,7 @@ class TestPage extends StatelessWidget {
               decoration: BoxDecoration(
                 color:const  Color(0xFF4385f5),
                   borderRadius: BorderRadius.circular(20)),
-              child: TextButton(
+              child: FlatButton(
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (_) => const FamilyPage()));
@@ -118,10 +118,10 @@ class TestPage extends StatelessWidget {
               decoration: BoxDecoration(
                   color: const Color(0xFF4385f5),
                   borderRadius: BorderRadius.circular(20)),
-              child: TextButton(
+              child: FlatButton(
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const BookPage(data: [],)));
+                      MaterialPageRoute(builder: (_) => const BookPage()));
                 },
                 child: const Text(
                   'Proceed',

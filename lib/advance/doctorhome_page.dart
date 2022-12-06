@@ -33,7 +33,7 @@ bool iscart=true;
 List<bool> isshow=[];
   getmedia() async{
 
-    final uri = Uri.parse(serves.url+"hometest.php?type=doctorhome");
+    final uri = Uri.parse(serves.url+"homeservise.php?home_service");
 
 
     var response = await http.get(uri);
@@ -148,7 +148,7 @@ List  allcheckid=[];
                              showDialog(
                                  context: context,
                                  builder: (ctx) => AlertDialog(
-                                   title: Image.network("${serves.url}/image/${emt['image']}"),
+                                   title: Image.asset('assets/images/iv.jpg'),
                                  ));
                            },
                            child:  CircleAvatar(
@@ -177,7 +177,7 @@ List  allcheckid=[];
                     decoration: BoxDecoration(
                         color: const Color(0xFF689df7),
                         borderRadius: BorderRadius.circular(20)),
-                    child: TextButton(
+                    child: FlatButton(
                       onPressed: () {
                        getlist();
                       },
@@ -197,11 +197,11 @@ List alldata=[];
   void getlist() {
   for(int i=0;i<allcheckid.length;i++){
 
-    var arr= {
-      "servicename": name[i].toString(),
+    var arr={
+      "servicename":name[i],
       "image": pic[i],
-      'id': allcheckid[i],
-      'count': "Select",
+      'id':allcheckid[i],
+       'count':"Select",
     };
     alldata.add(arr);
   }

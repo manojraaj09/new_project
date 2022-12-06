@@ -1,28 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
-import 'login/navigation_page.dart';
-
-class Successfull extends StatefulWidget {
+class Successfull extends StatelessWidget {
   const Successfull({Key? key}) : super(key: key);
 
-  @override
-  State<Successfull> createState() => _SuccessfullState();
-}
-
-class _SuccessfullState extends State<Successfull> {
-
-
-  void initState() {
-    super.initState();
-    Timer(Duration(seconds: 3), () => checksesiion());
-  }
-  checksesiion() {
-    Navigator.push(
-      context, MaterialPageRoute(builder: (context) => NavigationPage()),
-    );
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

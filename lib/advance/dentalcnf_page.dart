@@ -10,7 +10,20 @@ class DentalCnf extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-
+          automaticallyImplyLeading: true,
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => const PhysicianPage(drid: null,)));
+            },
+            child: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+              size: 30,
+            ),
+          ),
+          elevation: 0,
+          centerTitle: true,
           backgroundColor: Color(0xFF689df7),
           title: const Text(
             'Book an Appointment',
@@ -294,7 +307,7 @@ class DentalCnf extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Color(0xFF689df7),
                       borderRadius: BorderRadius.circular(20)),
-                  child: TextButton(
+                  child: FlatButton(
                     onPressed: () {},
                     child: const Text(
                       'PAY 200 Rs',
@@ -311,7 +324,7 @@ class DentalCnf extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Color(0xFF689df7),
                       borderRadius: BorderRadius.circular(20)),
-                  child: TextButton(
+                  child: FlatButton(
                     onPressed: () {},
                     child: const Text(
                       'Confirm',

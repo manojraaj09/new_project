@@ -1,46 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:practo/Nurse/nurse_page.dart';
 import 'package:practo/sample/sample_page.dart';
+
 import '../advance/ambulance_page.dart';
 import '../advance/contactus_page.dart';
 import '../login/medical_page.dart';
 import '../nurse/online_page.dart';
 import '../pain/physiotherapy_page.dart';
 import '../pain/profile_page.dart';
-import '../servise.dart';
 import '../testscreen/tutorail_page.dart';
 import 'download_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-class HomeScreen extends StatefulWidget {
+
+class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getdata();
-  }
-  String? name;
-  String? mobile;
-  String? regid;
-getdata()async{
-  SharedPreferences prefs =await SharedPreferences.getInstance();
-
-setState((){
-  name= prefs.getString('name');
-  mobile= prefs.getString('mobile');
-  regid= prefs.getString('regid');
-});
-
-
-}
-  Serves serves=Serves();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +28,17 @@ setState((){
             size: 30,
           )
         ],
-
+        // leading: GestureDetector(
+        //   onTap: (){
+        //
+        //
+        //   },
+        //   child: const Icon(
+        //     Icons.menu,
+        //     size: 30,
+        //     color: Color(0xFF344543),
+        //   ),
+        // ),
         title: Container(
             width: double.infinity,
             height: 40,
@@ -79,20 +62,20 @@ setState((){
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-             DrawerHeader(
+            const DrawerHeader(
               padding: EdgeInsets.all(0),
               child: UserAccountsDrawerHeader(
                 accountName: Text(
-                  name.toString(),
+                  "ABC",
                   style: TextStyle(color: Color(0xFF689df7)),
                 ),
                 accountEmail: Text(
-                  mobile.toString(),
+                  "abc977@gmail.com",
                   style: TextStyle(color: Color(0xFF689df7)),
                 ),
                 currentAccountPicture: CircleAvatar(
                   radius: 20,
-                  backgroundImage: NetworkImage("${serves.url}image/$regid.jpg"),
+                  backgroundImage: AssetImage('assets/images/boy.jpg'),
                 ),
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -338,7 +321,7 @@ setState((){
               child: GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (_) =>  Nurse()));
+                      MaterialPageRoute(builder: (_) => const Nurse()));
                 },
                 child: Container(
                   child: const CircleAvatar(
@@ -457,7 +440,7 @@ setState((){
             decoration: BoxDecoration(
                 color: const Color(0xFF689df7),
                 borderRadius: BorderRadius.circular(20)),
-            child: TextButton(
+            child: FlatButton(
               onPressed: () {},
               child: const Text(
                 'Common Disease',

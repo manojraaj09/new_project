@@ -159,9 +159,9 @@ class FamilyPage extends StatelessWidget {
                   color: const Color(0xFF4385f5),
 
                   borderRadius: BorderRadius.circular(20)),
-              child: TextButton(
+              child: FlatButton(
                 onPressed: () { Navigator.push(context,
-                    MaterialPageRoute(builder: (_) =>  BookPage(data: [],)));},
+                    MaterialPageRoute(builder: (_) => const BookPage()));},
                 child: const Text(
                   'ADD PATIENT',
                   style: TextStyle(fontSize: 14, color: Colors.white),

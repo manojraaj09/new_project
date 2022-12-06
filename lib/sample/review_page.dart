@@ -60,7 +60,8 @@ class _ReviewRatingState extends State<ReviewRating> {
               color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.teal,
-
+        centerTitle: true,
+        elevation: 0,
       ),
       body: Card(
           child:Column(
@@ -91,7 +92,9 @@ class _ReviewRatingState extends State<ReviewRating> {
                         color: Colors.amber,
 
                       ),
-                      onRatingUpdate:(w){},
+                      onRatingUpdate: (rating) {
+                        print(rating);
+                      },
                     ),
 
                   ),
