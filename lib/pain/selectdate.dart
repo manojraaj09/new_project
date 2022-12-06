@@ -1,18 +1,19 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import '../advance/book_screen.dart';
+
+import '../advance/chooseday_page.dart';
 import '../servise.dart';
 
-import 'nurseprocedure.dart';
-
-class NurseCare extends StatefulWidget {
-  const NurseCare({Key? key}) : super(key: key);
-
+class selectdate extends StatefulWidget {
+  const selectdate({Key? key, required String this.type}) : super(key: key);
+  final type;
   @override
-  State<NurseCare> createState() => _NurseCareState();
+  State<selectdate> createState() => _selectdateState();
 }
 
-class _NurseCareState extends State<NurseCare> {
+class _selectdateState extends State<selectdate> {
   bool valuefirst = false;
   bool valuesecond = false;
   bool valuethird = false;
@@ -30,7 +31,7 @@ class _NurseCareState extends State<NurseCare> {
   List<bool> isshow=[];
   getmedia() async{
 
-    final uri = Uri.parse(serves.url+"hometest.php?type=nursing");
+    final uri = Uri.parse(serves.url+"hometest.php?type=${widget.type}");
 
 
     var response = await http.get(uri);
@@ -43,6 +44,7 @@ class _NurseCareState extends State<NurseCare> {
       var amar={
         "servicename":row['servicename'],
         "image": row['image'],
+        "dis": row['description'],
         'id':row['id'],
         'count':    count,
       };
@@ -50,15 +52,16 @@ class _NurseCareState extends State<NurseCare> {
       carddata.add(amar);
       count++;
     });
+
     setState((){
       iscart=false;
     });
+
   }
 
 
   List  allcheckid=[];
-  List  name=[];
-  List  pic=[];
+
 
 
 
@@ -68,7 +71,7 @@ class _NurseCareState extends State<NurseCare> {
     return iscart ? Center(child: CircularProgressIndicator()) : Scaffold(
         appBar: AppBar(
           title: const Text(
-            'Nursing Staff',
+            'Physiotherapy Services',
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           elevation: 0,
@@ -83,7 +86,7 @@ class _NurseCareState extends State<NurseCare> {
                 Container(
                   padding: const EdgeInsets.only(top: 20),
                   child: const Text(
-                    'Choose Procedure',
+                    'Select Physiotherapy Services for',
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -97,8 +100,6 @@ class _NurseCareState extends State<NurseCare> {
                   children: carddata.map((emt) {
                     m++;
                     // ischeck[m]=ischeck[m];
-
-
                     return  Container(
                       padding: const EdgeInsets.only(top: 20),
                       child: Row(
@@ -115,16 +116,14 @@ class _NurseCareState extends State<NurseCare> {
                                   isshow[emt['count']]=false;
 
 
-                                  name.remove(emt['servicename']);
-                                  pic.remove(emt['image']);
+
                                   allcheckid.remove(emt['id']);
                                 }else{
                                   isshow[emt['count']]=true;
 
 
 
-                                  name.add(emt['servicename']);
-                                  pic.add("${serves.url}/image/${emt['image']}");
+
                                   allcheckid.add(emt['id']);
                                 }
 
@@ -154,27 +153,57 @@ class _NurseCareState extends State<NurseCare> {
                           const SizedBox(
                             width: 30,
                           ),
-                          Text(
-                            emt['servicename'].toString(),
-                            style: TextStyle(color: Colors.black),
+                          Column(
+                            children: [
+                              Text(
+                                emt['servicename'].toString(),
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              SizedBox(
+                                width:200,
+                                child: Text(
+                                  emt['dis'].toString(),
+
+                                  style: TextStyle(color: Colors.black,fontSize: 8),
+                                ),
+                              ),
+                              // Padding(
+                              //   padding: const EdgeInsets.all(20),
+                              //   child: Container(
+                              //     height: 40,
+                              //     width: 150,
+                              //     decoration: BoxDecoration(
+                              //         color: const Color(0xFF689df7),
+                              //         borderRadius: BorderRadius.circular(20)),
+                              //     child: TextButton(
+                              //       onPressed: () {
+                              //         _showMyDialog();
+                              //       },
+                              //       child: const Text(
+                              //         'Continue',
+                              //         style: TextStyle(fontSize: 14, color: Colors.white),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+                            ],
                           ),
                         ],
                       ),
                     );
                   }).toList(),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Container(
                     height: 40,
-                    width: 200,
+                    width: 150,
                     decoration: BoxDecoration(
                         color: const Color(0xFF689df7),
                         borderRadius: BorderRadius.circular(20)),
                     child: TextButton(
                       onPressed: () {
-                        getlist();
+                        _showMyDialog();
                       },
                       child: const Text(
                         'Continue',
@@ -193,23 +222,91 @@ class _NurseCareState extends State<NurseCare> {
     for(int i=0;i<allcheckid.length;i++){
 
       var arr= {
-        "servicename": name[i].toString(),
-        "image": pic[i],
+
         'id': allcheckid[i],
-        'count': "Select",
+        'day': days.text,
       };
       alldata.add(arr);
     }
-
-    //print(alldata);
-
+    //
+    // //print(alldata);
 
 
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (_) =>  NurseProcedure(name: alldata,)));
+            builder: (_) =>  ChooseDay(data:alldata)));
   }
+
+  final days =TextEditingController();
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Choose Days"),
+          content: Container(
+              padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
+              child: SizedBox(
+                height: 40,
+                child: TextField(
+                  controller: days,
+                  keyboardType: TextInputType.number,
+                  //style: const TextStyle(height: 0.4),
+                  decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              width: 1, color: Color(0xFF4385f5)),
+                          borderRadius: BorderRadius.circular(20)),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              width: 1, color: Color(0xFF4385f5)),
+                          borderRadius: BorderRadius.circular(20)),
+                      border: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              width: 1, color: Color(0xFF4385f5)),
+                          borderRadius: BorderRadius.circular(20)),
+                      hintText: ('Enter Number of Days'),
+                      hintStyle: TextStyle(fontSize: 13)),
+                ),
+              )),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                height: 40,
+                width: 100,
+                decoration: BoxDecoration(
+                    color: const Color(0xFF689df7),
+                    borderRadius: BorderRadius.circular(20)),
+                child: TextButton(
+                  onPressed: () {
+                    getlist();
+
+                  },
+                  child: const Text(
+                    'Proceed',
+                    style:
+                    TextStyle(fontSize: 14, color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
+
+
 
 }
 

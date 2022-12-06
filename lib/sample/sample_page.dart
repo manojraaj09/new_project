@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../advance/book_screen.dart';
 import '../download/home_screen.dart';
+import '../login/hometest.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class Sample extends StatelessWidget {
   const Sample({Key? key}) : super(key: key);
@@ -14,16 +16,7 @@ class Sample extends StatelessWidget {
           'Your Choice',
           style: TextStyle(color: Colors.white, fontSize: 16),
         ),
-        elevation: 0,
-        leading: GestureDetector(
-          onTap: (){ Navigator.push(context,
-              MaterialPageRoute(builder: (_) => const HomeScreen()));},
-          child: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-            size: 30,
-          ),
-        ),
+
         backgroundColor: const Color(0xFF689df7),
       ),
       body: SafeArea(
@@ -44,10 +37,11 @@ class Sample extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: const Color(0xFF689df7),
                     borderRadius: BorderRadius.circular(20)),
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const BookPage()));
+                    Navigator.push
+                      (context,
+                        MaterialPageRoute(builder: (_) =>  Hometest(type:"home")));
                   },
                   child: const Text(
                     'Sampling from home',
@@ -62,10 +56,10 @@ class Sample extends StatelessWidget {
                 decoration: BoxDecoration(
                     color:const Color(0xFF689df7),
                     borderRadius: BorderRadius.circular(20)),
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const BookPage()));
+                        MaterialPageRoute(builder: (_) =>  Hometest(type:"pathology")));
                   },
                   child: const Text(
                     'Sampling at Pathology',

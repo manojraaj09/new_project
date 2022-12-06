@@ -21,7 +21,7 @@ class Screen4 extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context,
-            MaterialPageRoute(builder: (_) =>  HomePage()));
+            MaterialPageRoute(builder: (_) =>  NavigationPage()));
           },
         child: const Icon(
           Icons.arrow_forward_ios_outlined,

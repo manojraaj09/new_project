@@ -226,10 +226,10 @@ class _AdvanceState extends State<Advance> {
                 decoration: BoxDecoration(
                     color: Color(0xFF689df7),
                     borderRadius: BorderRadius.circular(20)),
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const Final()));
+                        MaterialPageRoute(builder: (_) =>  Final(data: [],)));
                   },
                   child: const Text(
                     'Continue',

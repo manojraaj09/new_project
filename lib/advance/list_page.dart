@@ -56,21 +56,11 @@ class _DoctorListState extends State<DoctorList> {
         title: const Text(
           'Choose Specialist',
           style: TextStyle(
-              color: Colors.black,
+              color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 20),
         ),
-        centerTitle: true,
-        leading: GestureDetector(
-          onTap: (){ Navigator.push(context,
-              MaterialPageRoute(builder: (_) => const Online()));},
-          child: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-            size: 30,
-          ),
-        ),
-        backgroundColor: Colors.white,
+       
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -79,13 +69,13 @@ class _DoctorListState extends State<DoctorList> {
               child: Column(
                 children: [
 
-                  const Divider(
-                    thickness: 1,
-                    indent: 0,
-                    endIndent: 0,
-                    color: Colors.grey,
-                    height: 20,
-                  ),
+                  // const Divider(
+                  //   thickness: 1,
+                  //   indent: 0,
+                  //   endIndent: 0,
+                  //   color: Colors.grey,
+                  //   height: 20,
+                  // ),
                   InkWell(
                     onTap: (){
                       Navigator.push(
@@ -94,16 +84,17 @@ class _DoctorListState extends State<DoctorList> {
                       );
                     },
                     child: Container(
-                      padding: const EdgeInsets.only(left: 20),
+                      padding: const EdgeInsets.only(left: 20,right: 15),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children:  [
                           CircleAvatar(
                             radius: 30,
-                            backgroundImage: AssetImage('${serves.url}image/${item['menu_image']}'),
+                            backgroundImage: NetworkImage('${serves.url}image/${item['menu_image']}'),
                           ),
-                          SizedBox(width: 50,),
+                          //SizedBox(width: 50,),
                           Text(item['menu'].toString(),style: TextStyle(color: Colors.black),),
-                          SizedBox(width: 90,),
+                         // SizedBox(width: 90,),
                           Icon(Icons.arrow_forward_ios)
                         ],
                       ),

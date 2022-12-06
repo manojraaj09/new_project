@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../advance/wallet_page.dart';
+import '../booking/bookinglist.dart';
 import '../download/home_screen.dart';
 import 'chat_page.dart';
 import 'search_page.dart';
@@ -17,7 +18,7 @@ class _NavigationPageState extends State<NavigationPage> {
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     MoneyPage(),
-    Booking(),
+    bookinglist(),
     NotificationPage(),
     // HelpCenter(),
   ];

@@ -1,7 +1,46 @@
+import 'dart:convert';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ContactUs extends StatelessWidget {
+import 'package:http/http.dart' as http;
+
+import '../servise.dart';
+
+
+class ContactUs extends StatefulWidget {
   const ContactUs({Key? key}) : super(key: key);
+
+  @override
+  State<ContactUs> createState() => _ContactUsState();
+}
+
+class _ContactUsState extends State<ContactUs> {
+
+
+  final name =TextEditingController();
+  final email =TextEditingController();
+  final mobile =TextEditingController();
+  final message =TextEditingController();
+  Serves serves=Serves();
+
+  void bookdata() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var url2 = Uri.parse(serves.url +"contactus.php");
+
+    var response = await http.post(url2, body: {
+      "regid":prefs.getString('regid'),
+      "name": name.text,
+      "email": email.text,
+      "mobile": mobile.text,
+      "message": message.text,
+    },);
+    if (response.statusCode == 200) {
+    //  print(response.body);
+      Navigator.pop(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,20 +50,7 @@ class ContactUs extends StatelessWidget {
           'Contact Us',
           style: TextStyle(color: Colors.white, fontSize: 16),
         ),
-        elevation: 0,
-        centerTitle: true,
-        // leading: GestureDetector(
-        //   onTap: () {
-        //     Navigator.push(context,
-        //         MaterialPageRoute(builder: (_) => const HomeScreen()));
-        //   },
-        //   child: const Icon(
-        //     Icons.arrow_back,
-        //     color: Colors.white,
-        //     size: 30,
-        //   ),
-        // ),
-        automaticallyImplyLeading: true,
+
         backgroundColor: const Color(0xFF689df7),
       ),
       body: SingleChildScrollView(
@@ -37,6 +63,7 @@ class ContactUs extends StatelessWidget {
                   child: SizedBox(
                     height: 40,
                     child: TextField(
+                      controller:name ,
                       //style: const TextStyle(height: 0.4),
                       decoration: InputDecoration(
                           filled: true,
@@ -56,7 +83,7 @@ class ContactUs extends StatelessWidget {
                           hintText: ('Name'),
                           prefixIcon: Icon(Icons.person),
                           hintStyle: TextStyle(fontSize: 13)),
-                      
+
                     ),
                   )),
               const SizedBox(height: 20,),
@@ -65,6 +92,7 @@ class ContactUs extends StatelessWidget {
                   child: SizedBox(
                     height: 40,
                     child: TextField(
+                      controller: email,
                       //style: const TextStyle(height: 0.4),
                       decoration: InputDecoration(
                           filled: true,
@@ -92,6 +120,7 @@ class ContactUs extends StatelessWidget {
                   child: SizedBox(
                     height: 40,
                     child: TextField(
+                      controller: mobile,
                       //style: const TextStyle(height: 0.4),
                       decoration: InputDecoration(
                           filled: true,
@@ -120,6 +149,7 @@ class ContactUs extends StatelessWidget {
                     height: 100,
                     //width: 300,
                     child: TextField(
+                      controller: message,
                       //style: const TextStyle(height: 0.4),
                       decoration: InputDecoration(
                           filled: true,
@@ -150,8 +180,9 @@ class ContactUs extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: Color(0xFF689df7),
                     borderRadius: BorderRadius.circular(20)),
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () {
+                    bookdata();
                     // Navigator.push(context,
                     //     MaterialPageRoute(builder: (_) => const HomePage()));
                   },
@@ -166,7 +197,9 @@ class ContactUs extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    FloatingActionButton(onPressed:(){},
+                    FloatingActionButton(onPressed:()async{
+                      bool? res = await FlutterPhoneDirectCaller.callNumber('8427824392');
+                    },
                       child: const Icon(Icons.call),
                       backgroundColor: Colors.green,
                     ),

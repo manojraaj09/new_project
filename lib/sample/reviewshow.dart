@@ -81,8 +81,7 @@ class _ReviewPageState extends State<ReviewPage> {
               color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.teal,
-        centerTitle: true,
-        elevation: 0,
+
       ),
       body: SingleChildScrollView(
         child:isshow?Center(child: CircularProgressIndicator()): Column(

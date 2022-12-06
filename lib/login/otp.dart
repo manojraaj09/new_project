@@ -59,7 +59,7 @@ class _OtpVerification  extends State<OtpVerification > {
   }
 
   checknew() async{
-print('verify');
+       print('verify');
     var url2 = Uri.parse(serves.url+"custlogin.php");
     var response = await http.post(url2, body: {
       'mobile': widget.mobile1,
@@ -75,7 +75,7 @@ print('verify');
 
         prefs.setString('regid', data['regid']);
         prefs.setString('name', data['user']);
-
+        prefs.setString('mobile', widget.mobile1.toString());
 
           Navigator.push(
             context,MaterialPageRoute(builder: (context)=> NavigationPage()),
@@ -225,7 +225,7 @@ print('verify');
               decoration: BoxDecoration(
                   color: Color(0xFF344543),
                   borderRadius: BorderRadius.circular(20)),
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {
                   checkOtp(codes.text);
 

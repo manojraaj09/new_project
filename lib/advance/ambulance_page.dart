@@ -15,17 +15,7 @@ class Ambulance extends StatelessWidget {
           'Your Choice',
           style: TextStyle(color: Colors.white, fontSize: 16),
         ),
-        elevation: 0,
-        automaticallyImplyLeading:false,
-        leading: GestureDetector(
-          onTap: (){ Navigator.push(context,
-              MaterialPageRoute(builder: (_) => const HomeScreen()));},
-          child: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-            size: 30,
-          ),
-        ),
+
         backgroundColor: const Color(0xFF689df7),
       ),
       body: SafeArea(
@@ -46,10 +36,10 @@ class Ambulance extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: const Color(0xFF689df7),
                     borderRadius: BorderRadius.circular(20)),
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const Basic()));
+                        MaterialPageRoute(builder: (_) =>  Basic(type:"normalambulance")));
                   },
                   child: const Text(
                     'Normal Ambulance',
@@ -64,10 +54,10 @@ class Ambulance extends StatelessWidget {
                 decoration: BoxDecoration(
                     color:const Color(0xFF689df7),
                     borderRadius: BorderRadius.circular(20)),
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const Advance()));
+                        MaterialPageRoute(builder: (_) =>  Basic(type:"advaneambulance")));
                   },
                   child: const Text(
                     'Advance Ambulance',

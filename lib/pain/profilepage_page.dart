@@ -243,7 +243,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     decoration: BoxDecoration(
                         color: Color(0xFF689df7),
                         borderRadius: BorderRadius.circular(20)),
-                    child: FlatButton(
+                    child: TextButton(
                       onPressed: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (_) => const Profile()));

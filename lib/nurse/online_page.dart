@@ -17,17 +17,7 @@ class Online extends StatelessWidget {
           'Your Choice',
           style: TextStyle(color: Colors.white, fontSize: 16),
         ),
-        elevation: 0,
-        automaticallyImplyLeading:false,
-        leading: GestureDetector(
-          onTap: (){ Navigator.push(context,
-              MaterialPageRoute(builder: (_) => const HomeScreen()));},
-          child: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-            size: 30,
-          ),
-        ),
+
         backgroundColor: const Color(0xFF689df7),
       ),
       body: SafeArea(
@@ -48,7 +38,7 @@ class Online extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: const Color(0xFF689df7),
                     borderRadius: BorderRadius.circular(20)),
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (_) =>   HomeVisit()));
@@ -66,9 +56,10 @@ class Online extends StatelessWidget {
                 decoration: BoxDecoration(
                     color:const Color(0xFF689df7),
                     borderRadius: BorderRadius.circular(20)),
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () {
-                    Navigator.push(context,
+                    Navigator.push
+                      (context,
                         MaterialPageRoute(builder: (_) => const DoctorList()));
                   },
                   child: const Text(

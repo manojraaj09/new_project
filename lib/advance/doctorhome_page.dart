@@ -30,10 +30,12 @@ initState() {
 bool iscart=true;
 
   Serves serves=Serves();
-List<bool> isshow=[];
-  getmedia() async{
 
-    final uri = Uri.parse(serves.url+"homeservise.php?home_service");
+List<bool> isshow=[];
+
+getmedia() async{
+
+    final uri = Uri.parse(serves.url+"hometest.php?type=doctorhome");
 
 
     var response = await http.get(uri);
@@ -57,16 +59,10 @@ List<bool> isshow=[];
     setState((){
       iscart=false;
     });
-
   }
-
-
 List  allcheckid=[];
   List  name=[];
   List  pic=[];
-
-
-
   @override
   Widget build(BuildContext context) {
     var m=-1;
@@ -77,8 +73,6 @@ List  allcheckid=[];
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           elevation: 0,
-
-
           backgroundColor: const Color(0xFF689df7),
         ),
         body: SafeArea(
@@ -148,7 +142,7 @@ List  allcheckid=[];
                              showDialog(
                                  context: context,
                                  builder: (ctx) => AlertDialog(
-                                   title: Image.asset('assets/images/iv.jpg'),
+                                   title: Image.network("${serves.url}/image/${emt['image']}"),
                                  ));
                            },
                            child:  CircleAvatar(
@@ -168,7 +162,6 @@ List  allcheckid=[];
                    );
                  }).toList(),
                ),
-
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Container(
@@ -177,9 +170,9 @@ List  allcheckid=[];
                     decoration: BoxDecoration(
                         color: const Color(0xFF689df7),
                         borderRadius: BorderRadius.circular(20)),
-                    child: FlatButton(
+                    child: TextButton(
                       onPressed: () {
-                       getlist();
+                        getlist();
                       },
                       child: const Text(
                         'Continue',
@@ -196,26 +189,20 @@ List  allcheckid=[];
 List alldata=[];
   void getlist() {
   for(int i=0;i<allcheckid.length;i++){
-
-    var arr={
-      "servicename":name[i],
+    var arr= {
+      "servicename": name[i].toString(),
       "image": pic[i],
-      'id':allcheckid[i],
-       'count':"Select",
+      'id': allcheckid[i],
+      'count': "Select",
     };
     alldata.add(arr);
   }
-
   //print(alldata);
-
-
-
   Navigator.push(
       context,
       MaterialPageRoute(
           builder: (_) =>  DoctorHomeVisit(name: alldata,)));
   }
-
   }
 
 

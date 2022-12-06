@@ -122,7 +122,7 @@ class HomePage extends StatelessWidget {
             //   decoration: BoxDecoration(
             //       color: Color(0xFF689df7),
             //       borderRadius: BorderRadius.circular(20)),
-            //   child: FlatButton(
+            //   child: TextButton(
             //     onPressed: () {
             //       Navigator.push(
             //           context,
@@ -159,7 +159,7 @@ class HomePage extends StatelessWidget {
               decoration: BoxDecoration(
                   color: const Color(0xFF689df7),
                   borderRadius: BorderRadius.circular(20)),
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {
                   if(mobile.text.length==10){
                   Navigator.push(context,
@@ -185,7 +185,7 @@ class HomePage extends StatelessWidget {
             //   decoration: BoxDecoration(
             //       color: const Color(0xFF689df7),
             //       borderRadius: BorderRadius.circular(20)),
-            //   child: FlatButton(
+            //   child: TextButton(
             //     onPressed: () {
             //       Navigator.push(context,
             //           MaterialPageRoute(builder: (_) => const SignPage()));

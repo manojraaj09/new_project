@@ -2,16 +2,16 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:practo/sample/screen1_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
 import '../login/home_page.dart';
 import '../login/navigation_page.dart';
 import '../servise.dart';
-//
 
 class SignPage extends StatefulWidget {
-   const SignPage({Key? key, required this.mobile}) : super(key: key);
+   SignPage({Key? key, required this.mobile}) : super(key: key);
 final mobile;
   @override
   State<SignPage> createState() => _SignPageState();
@@ -19,10 +19,6 @@ final mobile;
 
 class _SignPageState extends State<SignPage> {
   TextEditingController dateinput = TextEditingController();
-
-
-
-
 
   String? errtext;
   Serves serves=Serves();
@@ -32,7 +28,7 @@ class _SignPageState extends State<SignPage> {
     SharedPreferences prefs =await SharedPreferences.getInstance();
     //print('8382946376');
 
-      var url2 = Uri.parse("${serves.url}register.php");
+      var url2 = Uri.parse(serves.url + "register.php");
 
       var response = await http.post(url2, body: {
         'name': name.text,
@@ -40,23 +36,19 @@ class _SignPageState extends State<SignPage> {
         'email': email.text,
         'gender': gender.text,
         'dob': dateinput.text,
-
-
       });
       print(url2);
       if (response.statusCode == 200) {
+        print('hello');
         var check = jsonDecode(response.body);
-
-
-
-
+        print("3");
           prefs.setString('regid', check.toString());
+          print('4');
           prefs.setString('name', name.text);
-
-
-          Navigator.push(
-            context,MaterialPageRoute(builder: (context)=> const NavigationPage()),
-          );
+          print("5");
+          // Navigator.push(
+          //   context,MaterialPageRoute(builder: (context)=> Screen1()),
+          // );
 
 
       }
@@ -147,7 +139,7 @@ class _SignPageState extends State<SignPage> {
                                 const BorderSide(width: 1, color: Color(0xFF4385f5)),
                             borderRadius: BorderRadius.circular(20)),
                         hintText: ('Name'),
-                        hintStyle: const TextStyle(fontSize: 13)),
+                        hintStyle: TextStyle(fontSize: 13)),
                   ),
               )),
 
@@ -181,7 +173,7 @@ class _SignPageState extends State<SignPage> {
                                 const BorderSide(width: 1, color: Color(0xFF4385f5)),
                             borderRadius: BorderRadius.circular(20)),
                         hintText: ('Gender'),
-                        hintStyle: const TextStyle(fontSize: 13)),
+                        hintStyle: TextStyle(fontSize: 13)),
                   ),
               )),
           Container(
@@ -241,7 +233,7 @@ class _SignPageState extends State<SignPage> {
                               const BorderSide(width: 1,color: Color(0xFF4385f5)),
                           borderRadius: BorderRadius.circular(20)),
                       hintText: 'DOB',
-                      hintStyle: const TextStyle(fontSize: 13),
+                      hintStyle: TextStyle(fontSize: 13),
                       prefixIcon: const Icon(Icons.calendar_today),
                     ),
                     readOnly: true,
@@ -274,16 +266,16 @@ class _SignPageState extends State<SignPage> {
             height: 40,
             width: 200,
             decoration: BoxDecoration(
-                  color: const Color(0xFF689df7),
+                  color: Color(0xFF689df7),
                   borderRadius: BorderRadius.circular(20)),
-            child: FlatButton(
+            child: TextButton(
               onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  // If the form is valid, display a snackbar. In the real world,
-                  // you'd often call a server or save the information in a database.
-
-                  singUp();
-                }
+                Navigator.push(
+                  context,MaterialPageRoute(builder: (context)=> Screen1()),
+                );
+                // if (_formKey.currentState!.validate()) {
+                //   singUp();
+                // }
               },
               child: const Text(
                   'Sign Up',

@@ -1,18 +1,18 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import '../advance/book_screen.dart';
+
 import '../servise.dart';
 
-import 'nurseprocedure.dart';
-
-class NurseCare extends StatefulWidget {
-  const NurseCare({Key? key}) : super(key: key);
-
+class Hometest extends StatefulWidget {
+  const Hometest({Key? key, required String this.type}) : super(key: key);
+final type;
   @override
-  State<NurseCare> createState() => _NurseCareState();
+  State<Hometest> createState() => _HometestState();
 }
 
-class _NurseCareState extends State<NurseCare> {
+class _HometestState extends State<Hometest> {
   bool valuefirst = false;
   bool valuesecond = false;
   bool valuethird = false;
@@ -30,7 +30,7 @@ class _NurseCareState extends State<NurseCare> {
   List<bool> isshow=[];
   getmedia() async{
 
-    final uri = Uri.parse(serves.url+"hometest.php?type=nursing");
+    final uri = Uri.parse(serves.url+"hometest.php?type=${widget.type}");
 
 
     var response = await http.get(uri);
@@ -43,6 +43,7 @@ class _NurseCareState extends State<NurseCare> {
       var amar={
         "servicename":row['servicename'],
         "image": row['image'],
+        "dis": row['description'],
         'id':row['id'],
         'count':    count,
       };
@@ -50,15 +51,16 @@ class _NurseCareState extends State<NurseCare> {
       carddata.add(amar);
       count++;
     });
+
     setState((){
       iscart=false;
     });
+
   }
 
 
   List  allcheckid=[];
-  List  name=[];
-  List  pic=[];
+
 
 
 
@@ -67,8 +69,9 @@ class _NurseCareState extends State<NurseCare> {
     var m=-1;
     return iscart ? Center(child: CircularProgressIndicator()) : Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Nursing Staff',
+          centerTitle: true,
+          title:  Text(
+            'Book A Test',
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           elevation: 0,
@@ -81,15 +84,31 @@ class _NurseCareState extends State<NurseCare> {
             child: Column(
               children: [
                 Container(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: const Text(
-                    'Choose Procedure',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  ),
-                ),
+                    padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
+                    child: SizedBox(
+                      height: 40,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                const BorderSide(width: 1, color: Color(0xFF4385f5)),
+                                borderRadius: BorderRadius.circular(20)),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                const BorderSide(width: 1, color: Color(0xFF4385f5)),
+                                borderRadius: BorderRadius.circular(20)),
+                            border: OutlineInputBorder(
+                                borderSide:
+                                const BorderSide(width: 1, color: Color(0xFF4385f5)),
+                                borderRadius: BorderRadius.circular(20)),
+                            hintText: ('Search with Text name or Code'),
+                            suffixIcon: Icon(Icons.search),
+                            hintStyle: TextStyle(fontSize: 13),
+                            prefixIcon: Icon(Icons.filter_alt_rounded)),
+                      ),
+                    )),
                 const SizedBox(
                   height: 20,
                 ),
@@ -103,6 +122,7 @@ class _NurseCareState extends State<NurseCare> {
                       padding: const EdgeInsets.only(top: 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Checkbox(
                             checkColor: Colors.blue,
@@ -115,16 +135,14 @@ class _NurseCareState extends State<NurseCare> {
                                   isshow[emt['count']]=false;
 
 
-                                  name.remove(emt['servicename']);
-                                  pic.remove(emt['image']);
+
                                   allcheckid.remove(emt['id']);
                                 }else{
                                   isshow[emt['count']]=true;
 
 
 
-                                  name.add(emt['servicename']);
-                                  pic.add("${serves.url}/image/${emt['image']}");
+
                                   allcheckid.add(emt['id']);
                                 }
 
@@ -154,10 +172,28 @@ class _NurseCareState extends State<NurseCare> {
                           const SizedBox(
                             width: 30,
                           ),
-                          Text(
-                            emt['servicename'].toString(),
-                            style: TextStyle(color: Colors.black),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                emt['servicename'].toString(),
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              SizedBox(
+                                height: 3,
+                              ),
+                              SizedBox(
+                                width:200,
+                                child: Text(
+                                  emt['dis'].toString(),
+
+                                  style: TextStyle(color: Colors.black,fontSize: 8),
+                                ),
+                              ),
+                            ],
                           ),
+
                         ],
                       ),
                     );
@@ -193,8 +229,7 @@ class _NurseCareState extends State<NurseCare> {
     for(int i=0;i<allcheckid.length;i++){
 
       var arr= {
-        "servicename": name[i].toString(),
-        "image": pic[i],
+
         'id': allcheckid[i],
         'count': "Select",
       };
@@ -208,7 +243,7 @@ class _NurseCareState extends State<NurseCare> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (_) =>  NurseProcedure(name: alldata,)));
+            builder: (_) =>  BookPage(data: allcheckid,)));
   }
 
 }

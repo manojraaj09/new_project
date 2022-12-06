@@ -192,7 +192,7 @@ class BookProfile extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: const Color(0xFF689df7),
                     borderRadius: BorderRadius.circular(20)),
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () {
                     // Navigator.push(context,
                     //     MaterialPageRoute(builder: (_) => const OtpPage()));

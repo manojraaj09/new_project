@@ -5,7 +5,7 @@ import 'medicalstore_page.dart';
 import 'medicineorder_page.dart';
 
 class Medical extends StatelessWidget {
-  const Medical({Key? key}) : super(key: key);
+  const   Medical({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,17 +15,7 @@ class Medical extends StatelessWidget {
           'Pharmacy',
           style: TextStyle(color: Colors.white, fontSize: 16),
         ),
-        elevation: 0,
-        automaticallyImplyLeading:false,
-        leading: GestureDetector(
-          onTap: (){ Navigator.push(context,
-              MaterialPageRoute(builder: (_) => const HomeScreen()));},
-          child: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-            size: 30,
-          ),
-        ),
+
         backgroundColor: const Color(0xFF689df7),
       ),
       body: SafeArea(
@@ -46,7 +36,7 @@ class Medical extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: const Color(0xFF689df7),
                     borderRadius: BorderRadius.circular(20)),
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (_) => const MedicalOrder()));
@@ -64,7 +54,7 @@ class Medical extends StatelessWidget {
                 decoration: BoxDecoration(
                     color:const Color(0xFF689df7),
                     borderRadius: BorderRadius.circular(20)),
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (_) => const MedicalStore()));

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:practo/login/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -33,7 +34,7 @@ class _SplashState extends State<Splash> {
     }else{
       print('not login');
       Navigator.push(
-        context,MaterialPageRoute(builder: (context)=> Screen1()),
+        context,MaterialPageRoute(builder: (context)=> HomePage()),
       );
     }
   }

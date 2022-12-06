@@ -364,7 +364,7 @@ bool isshow=true;
                   decoration: BoxDecoration(
                       color: Color(0xFF344543),
                       borderRadius: BorderRadius.circular(20)),
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () {
                       setState((){
                         isshowdlo=true;
@@ -389,7 +389,7 @@ bool isshow=true;
                   decoration: BoxDecoration(
                       color: Color(0xFF344543),
                       borderRadius: BorderRadius.circular(20)),
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () {
 
                       Booknow();
